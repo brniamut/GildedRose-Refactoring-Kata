@@ -41,3 +41,6 @@ The code does things with quality based upon its name. So let's split the loop i
 
 ### Fifth Refactor
 Looking pretty good. Let's do some simple refactors like using '+=' and '-=', inverting some conditionals, and making sure there are no nested if statements
+
+### Sixth Refactor
+Let's make this whole thing immutable. Let's use the map function, so that the whole array of items is replaced at once
