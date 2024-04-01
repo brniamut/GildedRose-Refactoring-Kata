@@ -44,3 +44,6 @@ Looking pretty good. Let's do some simple refactors like using '+=' and '-=', in
 
 ### Sixth Refactor
 Let's make this whole thing immutable. Let's use the map function, so that the whole array of items is replaced at once
+
+### Seventh Refactor
+Kind of decided that making it immutable is not necessary. It's even better if the Item class itself contains its own update logic. In an ideal world, you could give an update function as a parameter to `new Item()` but because it's not like that, and this is a refactor we do break it up in the class itself

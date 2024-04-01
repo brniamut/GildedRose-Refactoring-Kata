@@ -3,10 +3,77 @@ export class Item {
   sellIn: number;
   quality: number;
 
-  constructor(name, sellIn, quality) {
+  constructor(name: string, sellIn: number, quality: number) {
     this.name = name;
     this.sellIn = sellIn;
     this.quality = quality;
+  }
+
+  private decreaseSellIn() {
+    this.sellIn -= 1;
+  }
+
+  private updateBrie() {
+    if (this.quality >= 50) {
+      return;
+    }
+
+    this.quality += 1;
+
+    if (this.sellIn < 0) {
+      this.quality += 1;
+    }
+  }
+
+  private updateTickets() {
+    if (this.quality >= 50) {
+      return;
+    }
+
+    if (this.sellIn < 0) {
+      this.quality = 0;
+      return;
+    }
+
+    this.quality += 1;
+
+    if (this.sellIn < 10) {
+      this.quality += 1;
+    }
+
+    if (this.sellIn < 5) {
+      this.quality += 1;
+    }
+  }
+
+  private updateDefault() {
+    this.quality -= 1;
+
+    if (this.quality === 0) {
+      return;
+    }
+
+    if (this.sellIn < 0) {
+      this.quality -= 1;
+    }
+  }
+
+  public updateQuality() {
+    if (this.name === 'Sulfuras, Hand of Ragnaros') return;
+
+    this.decreaseSellIn();
+
+    if (this.name === 'Aged Brie') {
+      this.updateBrie();
+      return;
+    }
+
+    if (this.name === 'Backstage passes to a TAFKAL80ETC concert') {
+      this.updateTickets();
+      return;
+    }
+
+    this.updateDefault();
   }
 }
 
@@ -18,62 +85,7 @@ export class GildedRose {
   }
 
   updateQuality() {
-    this.items = this.items.map((item) => {
-      if (item.name === 'Sulfuras, Hand of Ragnaros') {
-        return item;
-      }
-
-      item.sellIn = item.sellIn - 1;
-
-      if (item.name === 'Aged Brie') {
-        if (item.quality >= 50) {
-          return item;
-        }
-
-        item.quality += 1;
-
-        if (item.sellIn < 0) {
-          item.quality += 1;
-        }
-
-        return item;
-      }
-
-      if (item.name === 'Backstage passes to a TAFKAL80ETC concert') {
-        if (item.quality >= 50) {
-          return item;
-        }
-
-        if (item.sellIn < 0) {
-          item.quality = 0;
-          return item;
-        }
-
-        item.quality += 1;
-
-        if (item.sellIn < 10) {
-          item.quality += 1;
-        }
-
-        if (item.sellIn < 5) {
-          item.quality += 1;
-        }
-
-        return item;
-      }
-
-      item.quality -= 1;
-
-      if (item.quality === 0) {
-        return item;
-      }
-
-      if (item.sellIn < 0) {
-        item.quality -= 1;
-      }
-
-      return item;
-    });
+    this.items.forEach((item) => item.updateQuality());
 
     return this.items;
   }
