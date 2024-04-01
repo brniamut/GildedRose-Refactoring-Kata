@@ -39,6 +39,5 @@ I notice that every loop this statement is being run `this.items[i].sellIn = thi
 Even more clear now is that there are things happening based upon item name and quality. Apart from the previous step the sellIn values is not adjusted anymore.
 The code does things with quality based upon its name. So let's split the loop in a per name part, and let it `continue` if everything is done for that specific item. It will repeat some logic, but will make it clearer to read
 
-
-
-
+### Fifth Refactor
+Looking pretty good. Let's do some simple refactors like using '+=' and '-=', inverting some conditionals, and making sure there are no nested if statements
