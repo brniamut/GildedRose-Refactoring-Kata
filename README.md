@@ -15,3 +15,7 @@ Just so I can get that good code-style going on
 ### Wrote some base tests
 
 I'm using Vitest because I know about it and want to use its coverage feature. The TextTest tool named in the README.md is also a nice tool, but I'll stick to what I'm used to. The Gilded Rose Requirements suggest writing tests one step at a time and not all at once. I agree with this, but I just want the base tests there, so I know I don't break anything basic. I'm suing the previous named requirements to set up these base tests
+
+### First refactor
+
+So let's do some basics first. I'm removing as many nested if statements as possible and try to move around code that uses inverted boolean logic `(a !== b)` to normal comparisons `(a === b)` and exchange the statements in the `if` and `else` block. This creates a better overview and makes it easier to create a mental modal
