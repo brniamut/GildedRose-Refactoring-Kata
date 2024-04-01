@@ -19,3 +19,15 @@ I'm using Vitest because I know about it and want to use its coverage feature. T
 ### First refactor
 
 So let's do some basics first. I'm removing as many nested if statements as possible and try to move around code that uses inverted boolean logic `(a !== b)` to normal comparisons `(a === b)` and exchange the statements in the `if` and `else` block. This creates a better overview and makes it easier to create a mental modal
+
+### Second refactor
+
+The result of the previous step shows me three obvious things:
+
+* The first level if statements are almost all about checking the item name
+* A lot of checks are about something not being a 'Sulfuras, Hand of Ragnaros'. This could be put it one statement
+* Sometimes a check in the second level of an if statement is already checked in the first level if statment.
+
+The quick wins are the last two points so let's do that first
+
+
