@@ -1,15 +1,15 @@
 # Steps in Refactoring
 
-### Introduction
+## Introduction
 In this guide, I detail my step-by-step process of refactoring the Gilded Rose Kata, starting from understanding the problem to systematically improving the code's structure and readability. Each stage of my work is documented in commits, which serve as a roadmap to my thought process. I recommend following these commits for insight into each decision made.
 
-### Steps
+## Steps
 
-#### Reviewing the Description
+### Reviewing the Description
 
 First, I began by reading the description and thoroughly examining the Gilded Rose Requirements to comprehend the problem statement and determine the necessary tools for execution.
 
-#### Cleaning the Repository
+### Cleaning the Repository
 
 After forking the repository, I noticed it included the problem statement in multiple languages, which was unnecessary for our purposes. Consequently, I removed all extraneous files, retaining only the TypeScript folder.
 
