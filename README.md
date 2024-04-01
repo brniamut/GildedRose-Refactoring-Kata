@@ -47,3 +47,11 @@ Let's make this whole thing immutable. Let's use the map function, so that the w
 
 ### Seventh Refactor
 Kind of decided that making it immutable is not necessary. It's even better if the Item class itself contains its own update logic. In an ideal world, you could give an update function as a parameter to `new Item()` but because it's not like that, and this is a refactor we do break it up in the class itself
+
+### Final Refactor and check
+
+When checking the test coverage I see that I'm missing two lines. The logic they check is:
+* Quality never goes below 0
+* For Brie quality should double every day if sellIn is below 0
+
+I add those tests, but I'm not sure if the original code also checked on this, or I introduced it when refactoring. I commit these new tests, checkout the commit with the original code, and check with the current test if this was so.

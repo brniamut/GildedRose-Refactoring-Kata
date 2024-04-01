@@ -31,10 +31,25 @@ describe('Gilded Rose', () => {
       expect(items[0].sellIn).toBe(-2);
       expect(items[0].quality).toBe(46);
     });
+
+    it('quality never goes below 0', () => {
+      const gildedRose = new GildedRose([new Item('test-item', 10, 1)]);
+
+      const items = gildedRose.updateQuality();
+
+      expect(items[0].name).toBe('test-item');
+      expect(items[0].sellIn).toBe(9);
+      expect(items[0].quality).toBe(0);
+
+      gildedRose.updateQuality();
+
+      expect(items[0].sellIn).toBe(8);
+      expect(items[0].quality).toBe(0);
+    });
   });
 
   describe('Age Brie', () => {
-    it('increases the quality if the item is for every day that passes but the quality is never more than 50', () => {
+    it('increases the quality for every day that passes but the quality is never more than 50', () => {
       const gildedRose = new GildedRose([new Item('Aged Brie', 10, 49)]);
 
       const items = gildedRose.updateQuality();
@@ -47,6 +62,21 @@ describe('Gilded Rose', () => {
 
       expect(items[0].sellIn).toBe(8);
       expect(items[0].quality).toBe(50);
+    });
+
+    it('increases the quality double for every day that passes and sellIn is below 0', () => {
+      const gildedRose = new GildedRose([new Item('Aged Brie', 1, 0)]);
+
+      const items = gildedRose.updateQuality();
+
+      expect(items[0].name).toBe('Aged Brie');
+      expect(items[0].sellIn).toBe(0);
+      expect(items[0].quality).toBe(1);
+
+      gildedRose.updateQuality();
+
+      expect(items[0].sellIn).toBe(-1);
+      expect(items[0].quality).toBe(3);
     });
   });
 
