@@ -30,4 +30,8 @@ The result of the previous step shows me three obvious things:
 
 The quick wins are the last two points so let's do that first
 
+### Third Refactor
+
+I notice that every loop this statement is being run `this.items[i].sellIn = this.items[i].sellIn - 1`. This is of course only the case if the item is not 'Sulfuras, Hand of Ragnaros', but we already fixed that. If we move this statement to the top of the loop it breaks the tests for the special items (Tickets and the Brie Cheese). Well that logic was written with the scenario in mind that we would subtract 1 day after the quality checks. So let's change those if statements too by decreasing the check on sellIn by 1.  
+
 
