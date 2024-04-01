@@ -1,57 +1,64 @@
-# Steps in solving this problem
+# Steps in Refactoring
+
+### Introduction
+In this guide, I detail my step-by-step process of refactoring the Gilded Rose Kata, starting from understanding the problem to systematically improving the code's structure and readability. Each stage of my work is documented in commits, which serve as a roadmap to my thought process. I recommend following these commits for insight into each decision made.
+
+### Steps
 
 #### Reviewing the Description
 
-Firstly, I started by reading the description, going through the Gilded Rose Requirements to understand the problem statement and identify the tools required to run this.
+First, I began by reading the description and thoroughly examining the Gilded Rose Requirements to comprehend the problem statement and determine the necessary tools for execution.
 
-####  Cleaning the Repository
+#### Cleaning the Repository
 
-The repository has been forked but naturally contains the problem statement for all languages, which is not entirely necessary. Let's remove everything that isn't needed, leaving only the TypeScript folder.
+After forking the repository, I noticed it included the problem statement in multiple languages, which was unnecessary for our purposes. Consequently, I removed all extraneous files, retaining only the TypeScript folder.
 
-### Added prettier to make it, well, prettier
+### Adding Prettier for Improved Code Style
 
-Just so I can get that good code-style going on
+To enhance the code style, I integrated Prettier into the project.
 
-### Wrote some base tests
+### Writing Base Tests
 
-I'm using Vitest because I know about it and want to use its coverage feature. The TextTest tool named in the README.md is also a nice tool, but I'll stick to what I'm used to. The Gilded Rose Requirements suggest writing tests one step at a time and not all at once. I agree with this, but I just want the base tests there, so I know I don't break anything basic. I'm suing the previous named requirements to set up these base tests
+I opted for Vitest due to my familiarity with it and its coverage feature. While the TextTest tool mentioned in the README.md is useful, I prefer sticking to what I know. The Gilded Rose Requirements recommend writing tests gradually, which I generally support. However, I wanted to establish base tests to ensure no fundamental breakages occur. These base tests are guided by the previously mentioned requirements.
 
 ### First Refactor
 
-So let's do some basics first. I'm removing as many nested if statements as possible and try to move around code that uses inverted boolean logic `(a !== b)` to normal comparisons `(a === b)` and exchange the statements in the `if` and `else` block. This creates a better overview and makes it easier to create a mental modal
+In this initial step, I focused on simplifying the code by reducing nested if statements and converting inverted boolean logic `(a !== b)` to standard comparisons `(a === b)`. This swap facilitated a clearer overview and easier mental modeling.
 
 ### Second Refactor
 
-The result of the previous step shows me three obvious things:
+This phase revealed three key observations:
 
-* The first level if statements are almost all about checking the item name
-* A lot of checks are about something not being a 'Sulfuras, Hand of Ragnaros'. This could be put it one statement
-* Sometimes a check in the second level of an if statement is already checked in the first level if statment.
+* Most first-level if statements are concerned with checking the item's name.
+* Numerous conditions verify if an item is not 'Sulfuras, Hand of Ragnaros', which could be consolidated.
+* Some conditions within nested if statements replicate checks from the first level.
 
-The quick wins are the last two points so let's do that first
+Addressing the latter two points offered immediate benefits, so I prioritized those.
 
 ### Third Refactor
 
-I notice that every loop this statement is being run `this.items[i].sellIn = this.items[i].sellIn - 1`. This is of course only the case if the item is not 'Sulfuras, Hand of Ragnaros', but we already fixed that. If we move this statement to the top of the loop it breaks the tests for the special items (Tickets and the Brie Cheese). Well that logic was written with the scenario in mind that we would subtract 1 day after the quality checks. So let's change those if statements too by decreasing the check on sellIn by 1.  
+I noticed that `this.items[i].sellIn = this.items[i].sellIn - 1` was executed in every iteration unless the item was 'Sulfuras, Hand of Ragnaros', which had already been addressed. By moving this statement to the beginning of the loop, it disrupted tests for special items (Tickets and Brie Cheese) because it altered the intended sequence of operations. Adjusting the sellIn checks accordingly resolved this issue.
 
-### Forth Refactor
+### Fourth Refactor
 
-Even more clear now is that there are things happening based upon item name and quality. Apart from the previous step the sellIn values is not adjusted anymore.
-The code does things with quality based upon its name. So let's split the loop in a per name part, and let it `continue` if everything is done for that specific item. It will repeat some logic, but will make it clearer to read
+It became evident that operations were predominantly based on item name and quality. By restructuring the loop to focus on individual item names and allowing for early continuation, the code became more readable despite some repeated logic.
 
 ### Fifth Refactor
-Looking pretty good. Let's do some simple refactors like using '+=' and '-=', inverting some conditionals, and making sure there are no nested if statements
+
+The code is looking better. Minor improvements such as using '+=' and '-=' for adjustments, inverting some conditionals, and eliminating nested if statements were made.
 
 ### Sixth Refactor
-Let's make this whole thing immutable. Let's use the map function, so that the whole array of items is replaced at once
+
+I shifted towards immutability by utilizing the map function to update the entire array of items in one go.
 
 ### Seventh Refactor
-Kind of decided that making it immutable is not necessary. It's even better if the Item class itself contains its own update logic. In an ideal world, you could give an update function as a parameter to `new Item()` but because it's not like that, and this is a refactor we do break it up in the class itself
 
-### Final Refactor and check
+Upon reflection, immutability seemed unnecessary. It was more practical for the Item class to encapsulate its own update logic. Ideally, an update function would be passable to `new Item()`, but given the constraints, I integrated the logic directly into the class.
 
-When checking the test coverage I see that I'm missing two lines. The logic they check is:
-* Quality never goes below 0
-* For Brie quality should double every day if sellIn is below 0
+### Final Refactor and Check
 
-I add those tests, but I'm not sure if the original code also checked on this, or I introduced it when refactoring. I commit these new tests, checkout the commit with the original code, and check with the current test if this was so.
+Reviewing the test coverage, I identified two missing lines related to:
+* Ensuring quality never falls below 0.
+* Doubling the quality of Brie daily if sellIn is below 0.
+
+After adding tests for these scenarios, I revisited the original code to verify if these checks were pre-existing or a result of my refactoring. The comparison (and running the new tests on the old code) confirmed that the checks were pre-existing.
