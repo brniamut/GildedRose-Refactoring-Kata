@@ -11,3 +11,7 @@ The repository has been forked but naturally contains the problem statement for 
 ### Added prettier to make it, well, prettier
 
 Just so I can get that good code-style going on
+
+### Wrote some base tests
+
+I'm using Vitest because I know about it and want to use its coverage feature. The TextTest tool named in the README.md is also a nice tool, but I'll stick to what I'm used to. The Gilded Rose Requirements suggest writing tests one step at a time and not all at once. I agree with this, but I just want the base tests there, so I know I don't break anything basic. I'm suing the previous named requirements to set up these base tests
